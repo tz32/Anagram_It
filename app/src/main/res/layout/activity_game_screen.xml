@@ -150,7 +150,8 @@
         android:text="Submit"
         android:id="@+id/submitbutton"
         android:layout_above="@+id/endgamebutton"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="submitOnClick" />
 
     <TextView
         android:layout_width="wrap_content"

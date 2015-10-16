@@ -37,6 +37,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         return true;
     }
 
+
     @Override
     public void onClick(View v) {
         switch (v.getId())
