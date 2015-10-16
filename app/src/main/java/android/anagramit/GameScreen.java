@@ -35,6 +35,7 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
     TextView space7;
     TextView space8;
     TextView space9;
+    TextView clock;
     int levelNumber;
     int buttonY;
     int textY;
@@ -43,6 +44,7 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
     int screenWidth;
     int spacing;
     int solutionNumber;
+    int time = 0;
     String guess = "";
 
     // Array of the words for each level
@@ -78,6 +80,7 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
         space7 = (TextView) findViewById(R.id.space7);
         space8 = (TextView) findViewById(R.id.space8);
         space9 = (TextView) findViewById(R.id.space9);
+        clock = (TextView) findViewById(R.id.textView9);
 
         // Get the End Game and Submit buttons from the XML
         endgamebutton = (Button) findViewById(R.id.endgamebutton);
@@ -343,6 +346,9 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
         space3params.width = 100;
         space3params.height = 100;
         space3.requestLayout();
+
+        // setting the value of the clock. Just a test for now.
+        clock.setText(Integer.toString(time));
 
         space1.setX(spacing - 100);
         space1.setY(textY);
