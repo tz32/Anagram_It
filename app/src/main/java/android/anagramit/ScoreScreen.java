@@ -22,6 +22,8 @@ public class ScoreScreen extends ActionBarActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
+            // If the continue button is pressed, go to the level select screen
             case R.id.continuebutton:
                 Intent intent = new Intent(this, LevelSelect.class);
                 startActivity(intent);

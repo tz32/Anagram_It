@@ -19,6 +19,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Set up the buttons
         startbutton = (Button) findViewById(R.id.startbutton);
         startbutton.setOnClickListener(this);
 
@@ -37,24 +38,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId())
         {
+            // Go to the screen that corresponds with the button pressed
             case R.id.startbutton:
                 Intent intent1 = new Intent(this, LevelSelect.class);
                 startActivity(intent1);

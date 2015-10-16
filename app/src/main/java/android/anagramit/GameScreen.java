@@ -54,15 +54,13 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_screen);
 
-        buttonY = 500;
-        textY = 750;
-        sideBorder = 5;
-
+        // Get the width of the screen
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         screenWidth = size.x;
 
+        // Get the text boxes from the XML file
         leveltext = (TextView) findViewById(R.id.leveltext);
         space1 = (TextView) findViewById(R.id.space1);
         space2 = (TextView) findViewById(R.id.space2);
@@ -74,13 +72,14 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
         space8 = (TextView) findViewById(R.id.space8);
         space9 = (TextView) findViewById(R.id.space9);
 
+        // Get the End Game and Submit buttons from the XML
         endgamebutton = (Button) findViewById(R.id.endgamebutton);
         endgamebutton.setOnClickListener(this);
 
         submitbutton = (Button) findViewById(R.id.submitbutton);
         submitbutton.setOnClickListener(this);
 
-        // Get the level number
+        // Get the level number from the level select screen
         Intent intent = getIntent();
         levelNumber = intent.getIntExtra("level_num", 0) - 1;
 
@@ -123,9 +122,116 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
 
     }
 
+
+    // The actions that will be performed when a specific button is pressed
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+
+            // If the End Game button is pressed, go to the scorescreen
+            case R.id.endgamebutton:
+                Intent intent = new Intent(this, ScoreScreen.class);
+                startActivity(intent);
+                break;
+
+            // If a letter button is pressed, put that character in the next available text box,
+            // and disable the button that was pressed
+            case R.id.letter1:
+                setAvailableSpace(letter1.getText());
+                letter1.setEnabled(false);
+                break;
+
+            case R.id.letter2:
+                setAvailableSpace(letter2.getText());
+                letter2.setEnabled(false);
+                break;
+
+            case R.id.letter3:
+                setAvailableSpace(letter3.getText());
+                letter3.setEnabled(false);
+                break;
+
+            case R.id.letter4:
+                setAvailableSpace(letter4.getText());
+                letter4.setEnabled(false);
+                break;
+
+            case R.id.letter5:
+                setAvailableSpace(letter5.getText());
+                letter5.setEnabled(false);
+                break;
+
+            case R.id.letter6:
+                setAvailableSpace(letter6.getText());
+                letter6.setEnabled(false);
+                break;
+
+            case R.id.letter7:
+                setAvailableSpace(letter7.getText());
+                letter7.setEnabled(false);
+                break;
+
+            case R.id.letter8:
+                setAvailableSpace(letter8.getText());
+                letter8.setEnabled(false);
+                break;
+
+            case R.id.letter9:
+                setAvailableSpace(letter9.getText());
+                letter9.setEnabled(false);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    // Place the letter in the button pressed in the next available text box,
+    // then disable the button so it cannot be pushed again
+    // If the text boxes are full, do nothing
+    private void setAvailableSpace(CharSequence letter) {
+
+        if (space1.getText().equals(""))
+        {
+            space1.setText(letter);
+        }
+        else if (space2.getText().equals(""))
+        {
+            space2.setText(letter);
+        }
+        else if (space3.getText().equals(""))
+        {
+            space3.setText(letter);
+        }
+        else if (space4.getText().equals("") && wordLength > 3)
+        {
+            space4.setText(letter);
+        }
+        else if (space5.getText().equals("") && wordLength > 4)
+        {
+            space5.setText(letter);
+        }
+        else if (space6.getText().equals("") && wordLength > 5)
+        {
+            space6.setText(letter);
+        }
+        else if (space7.getText().equals("") && wordLength > 6)
+        {
+            space7.setText(letter);
+        }
+        else if (space8.getText().equals("") && wordLength > 7)
+        {
+            space8.setText(letter);
+        }
+        else if (space9.getText().equals("") && wordLength > 8)
+        {
+            space9.setText(letter);
+        }
+    }
+
     // Set up the buttons depending on the length of the word
     private void initButtons(String[] anagram, int levelNumber) {
-        
+
         switch (anagram[levelNumber].length())
         {
             case 3:
@@ -160,9 +266,10 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
                 break;
 
         }
-        
+
     }
 
+    // Set up Methods
     private void setup3Buttons(String word) {
         ViewGroup.LayoutParams letter1params = letter1.getLayoutParams();
         letter1params.width = 125;
@@ -1021,102 +1128,4 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
 
     }
 
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.endgamebutton:
-                Intent intent = new Intent(this, ScoreScreen.class);
-                startActivity(intent);
-                break;
-
-            case R.id.letter1:
-                setAvailableSpace(letter1.getText());
-                letter1.setEnabled(false);
-                break;
-
-            case R.id.letter2:
-                setAvailableSpace(letter2.getText());
-                letter2.setEnabled(false);
-                break;
-
-            case R.id.letter3:
-                setAvailableSpace(letter3.getText());
-                letter3.setEnabled(false);
-                break;
-
-            case R.id.letter4:
-                setAvailableSpace(letter4.getText());
-                letter4.setEnabled(false);
-                break;
-
-            case R.id.letter5:
-                setAvailableSpace(letter5.getText());
-                letter5.setEnabled(false);
-                break;
-
-            case R.id.letter6:
-                setAvailableSpace(letter6.getText());
-                letter6.setEnabled(false);
-                break;
-
-            case R.id.letter7:
-                setAvailableSpace(letter7.getText());
-                letter7.setEnabled(false);
-                break;
-
-            case R.id.letter8:
-                setAvailableSpace(letter8.getText());
-                letter8.setEnabled(false);
-                break;
-
-            case R.id.letter9:
-                setAvailableSpace(letter9.getText());
-                letter9.setEnabled(false);
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    private void setAvailableSpace(CharSequence letter) {
-
-        if (space1.getText().equals(""))
-        {
-            space1.setText(letter);
-        }
-        else if (space2.getText().equals(""))
-        {
-            space2.setText(letter);
-        }
-        else if (space3.getText().equals(""))
-        {
-            space3.setText(letter);
-        }
-        else if (space4.getText().equals("") && wordLength > 3)
-        {
-            space4.setText(letter);
-        }
-        else if (space5.getText().equals("") && wordLength > 4)
-        {
-            space5.setText(letter);
-        }
-        else if (space6.getText().equals("") && wordLength > 5)
-        {
-            space6.setText(letter);
-        }
-        else if (space7.getText().equals("") && wordLength > 6)
-        {
-            space7.setText(letter);
-        }
-        else if (space8.getText().equals("") && wordLength > 7)
-        {
-            space8.setText(letter);
-        }
-        else if (space9.getText().equals("") && wordLength > 8)
-        {
-            space9.setText(letter);
-        }
-    }
 }

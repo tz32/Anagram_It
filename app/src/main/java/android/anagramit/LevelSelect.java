@@ -24,6 +24,7 @@ public class LevelSelect extends ActionBarActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_select);
 
+        // Set up the buttons
         backbutton = (Button) findViewById(R.id.backbutton);
         backbutton.setOnClickListener(this);
 
@@ -56,15 +57,19 @@ public class LevelSelect extends ActionBarActivity implements View.OnClickListen
 
     }
 
+    // Actions based on button press
     @Override
     public void onClick(View v) {
         switch (v.getId())
         {
+            // If back button is pressed, go to the home screen
             case R.id.backbutton:
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 break;
 
+            // If a level button is pressed, go to the game screen,
+            // and pass the level number as an extra
             case R.id.level1:
                 Intent intent1 = new Intent(this, GameScreen.class);
                 intent1.putExtra("level_num", 1);

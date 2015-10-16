@@ -22,6 +22,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId())
         {
+            // Go back to the home screen
             case R.id.backbutton:
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
