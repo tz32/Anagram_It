@@ -105,6 +105,7 @@ public class LevelSelect extends ActionBarActivity implements View.OnClickListen
                 Intent intent7 = new Intent(this, GameScreen.class);
                 intent7.putExtra("level_num", 7);
                 startActivity(intent7);
+                break;
 
             case R.id.level8:
                 Intent intent8 = new Intent(this, GameScreen.class);
