@@ -25,6 +25,7 @@ public class ScoreScreen extends ActionBarActivity implements View.OnClickListen
             case R.id.continuebutton:
                 Intent intent = new Intent(this, LevelSelect.class);
                 startActivity(intent);
+                break;
         }
     }
 }

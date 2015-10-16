@@ -25,6 +25,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener{
             case R.id.backbutton:
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
+                break;
         }
     }
 }
