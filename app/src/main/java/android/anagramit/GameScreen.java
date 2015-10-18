@@ -59,8 +59,7 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_screen);
 
-        //timelimit = 180000;
-        timelimit = 125000;
+        timelimit = 180000;
         buttonY = 500;
         textY = 750;
         sideBorder = 5;
