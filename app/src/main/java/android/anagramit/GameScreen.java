@@ -4,14 +4,12 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import java.lang.Math;
 
 public class GameScreen extends ActionBarActivity implements View.OnClickListener {
 
@@ -28,6 +26,7 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
     Button letter9;
     TextView leveltext;
     TextView timertext;
+    TextView scoretext;
     TextView space1;
     TextView space2;
     TextView space3;
@@ -44,14 +43,598 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
     int sideBorder;
     int screenWidth;
     int spacing;
-    int solutionNumber;
-    String guess = "";
     int timelimit;
+    int currentScore;
 
     // Array of the words for each level
     // i.e. anagram[0] = level 1, anagram[1] = level 2, etc
     // Length of each word must be between 3 and 9
-    String[] anagram = {"123", "1234", "12345", "123456", "ANAGRAM", "DRJACOBS", "123456789", "DESIGN", "DEVELOP", "TESTING"};
+    String[] anagram = {"GRAPHICS", "SETTINGS", "MEMORY", "MOBILE", "ANAGRAM", "DRJACOBS", "ANDROID", "DESIGN", "DEVELOP", "TESTING"};
+    String[] solutions = {"AR",
+            "AS",
+            "OR",
+            "OS",
+            "SO",
+            "ARS",
+            "OAR",
+            "ORA",
+            "ORS",
+            "RAS",
+            "SAR",
+            "AD",
+            "DA",
+            "DO",
+            "OD",
+            "OARS",
+            "OSAR",
+            "SOAR",
+            "SORA",
+            "ADO",
+            "ADS",
+            "ARD",
+            "DAS",
+            "DOR",
+            "DOS",
+            "DSO",
+            "ODA",
+            "ODS",
+            "ORD",
+            "RAD",
+            "ROD",
+            "SAD",
+            "SOD",
+            "AB",
+            "BA",
+            "BO",
+            "OB",
+            "ADOS",
+            "ARDS",
+            "DORS",
+            "ODAS",
+            "ORAD",
+            "ORDS",
+            "RADS",
+            "ROAD",
+            "RODS",
+            "SADO",
+            "SARD",
+            "SODA",
+            "SORD",
+            "ABO",
+            "ABS",
+            "ARB",
+            "ARC",
+            "BAR",
+            "BAS",
+            "BOA",
+            "BOR",
+            "BOS",
+            "BRA",
+            "BRO",
+            "CAR",
+            "COR",
+            "COS",
+            "OBA",
+            "OBS",
+            "OCA",
+            "ORB",
+            "ORC",
+            "ROB",
+            "ROC",
+            "SAB",
+            "SAC",
+            "SOB",
+            "SOC",
+            "DORSA",
+            "ROADS",
+            "SAROD",
+            "SORDA",
+            "ABOS",
+            "ARBS",
+            "ARCO",
+            "ARCS",
+            "BARS",
+            "BOAR",
+            "BOAS",
+            "BORA",
+            "BORS",
+            "BRAS",
+            "BROS",
+            "CARS",
+            "CORS",
+            "OBAS",
+            "OCAS",
+            "ORBS",
+            "ORCA",
+            "ORCS",
+            "ROBS",
+            "ROCS",
+            "SCAR",
+            "SOBA",
+            "SOCA",
+            "SORB",
+            "BAD",
+            "BOD",
+            "CAD",
+            "COD",
+            "DAB",
+            "DOB",
+            "DOC",
+            "ARCOS",
+            "BOARS",
+            "BORAS",
+            "ORCAS",
+            "OSCAR",
+            "BADS",
+            "BARD",
+            "BODS",
+            "BORD",
+            "BRAD",
+            "BROD",
+            "CADS",
+            "CARD",
+            "CODA",
+            "CODS",
+            "CORD",
+            "DABS",
+            "DARB",
+            "DOAB",
+            "DOBS",
+            "DOCS",
+            "DORB",
+            "DRAB",
+            "DRAC",
+            "SCAD",
+            "BAC",
+            "CAB",
+            "COB",
+            "ABORD",
+            "BARDO",
+            "BARDS",
+            "BOARD",
+            "BORDS",
+            "BRADS",
+            "BROAD",
+            "BRODS",
+            "CARDS",
+            "CODAS",
+            "CORDS",
+            "DARBS",
+            "DOABS",
+            "DOBRA",
+            "DORBA",
+            "DORBS",
+            "DRABS",
+            "DRACO",
+            "SCROD",
+            "BACS",
+            "CABS",
+            "CARB",
+            "COBS",
+            "CRAB",
+            "SCAB",
+            "ABORDS",
+            "ADSORB",
+            "BARDOS",
+            "BOARDS",
+            "BROADS",
+            "DOBRAS",
+            "DORBAS",
+            "CARBO",
+            "CARBS",
+            "CAROB",
+            "COARB",
+            "COBRA",
+            "CRABS",
+            "SCRAB",
+            "JA",
+            "JO",
+            "JAR",
+            "JOR",
+            "RAJ",
+            "BRASCO",
+            "CARBOS",
+            "CAROBS",
+            "COARBS",
+            "COBRAS",
+            "JARS",
+            "JORS",
+            "SOJA",
+            "JAB",
+            "JOB",
+            "JABS",
+            "JOBS"};
+
+
+    int[] points = {2,
+            2,
+            2,
+            2,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            11,
+            11,
+            11,
+            12,
+            12,
+            13,
+            13 };
+
+    boolean[] answerFound = {false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +646,7 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
         buttonY = 500;
         textY = 750;
         sideBorder = 5;
+        currentScore = 0;
 
         // Get the width of the screen
         Display display = getWindowManager().getDefaultDisplay();
@@ -73,6 +657,7 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
         // Get the text boxes from the XML file
         leveltext = (TextView) findViewById(R.id.leveltext);
         timertext = (TextView) findViewById(R.id.timertext);
+        scoretext = (TextView) findViewById(R.id.scoretext);
         space1 = (TextView) findViewById(R.id.space1);
         space2 = (TextView) findViewById(R.id.space2);
         space3 = (TextView) findViewById(R.id.space3);
@@ -93,6 +678,8 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
         // Get the level number from the level select screen
         Intent intent = getIntent();
         levelNumber = intent.getIntExtra("level_num", 0) - 1;
+
+        scoretext.setText("Score: 0");
 
         // Setup the buttons
         letter1 = (Button) findViewById(R.id.letter1);
@@ -144,10 +731,16 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
             }
 
             public void onFinish() {
-                timertext.setText("done!");
+                goToScoreScreen();
             }
         }.start();
 
+    }
+
+    private void goToScoreScreen() {
+        Intent intent = new Intent(this, ScoreScreen.class);
+        intent.putExtra("score", currentScore);
+        startActivity(intent);
     }
 
 
@@ -159,15 +752,15 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
             // If the End Game button is pressed, go to the scorescreen
             case R.id.endgamebutton:
                 Intent intent = new Intent(this, ScoreScreen.class);
+                intent.putExtra("score", currentScore);
                 startActivity(intent);
                 break;
 
             // currently the submit button changes its test to show if the word is correct or not
             // this is just a aplce holder and should be changed.
             case R.id.submitbutton:
-                if(guess.equals(anagram[solutionNumber])) {
-                    submitbutton.setText("correct");
-                } else submitbutton.setText("false");
+                checkAnswer();
+                clearSpaces();
                 break;
 
             // If a letter button is pressed, put that character in the next available text box,
@@ -220,6 +813,91 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
             default:
                 break;
         }
+    }
+
+        private void clearSpaces() {
+                space1.setText("");
+                space2.setText("");
+                space3.setText("");
+                space4.setText("");
+                space5.setText("");
+                space6.setText("");
+                space7.setText("");
+                space8.setText("");
+                space9.setText("");
+
+                letter1.setEnabled(true);
+                letter2.setEnabled(true);
+                letter3.setEnabled(true);
+                letter4.setEnabled(true);
+                letter5.setEnabled(true);
+                letter6.setEnabled(true);
+                letter7.setEnabled(true);
+                letter8.setEnabled(true);
+                letter9.setEnabled(true);
+        }
+
+        private boolean checkAnswer() {
+        String currentAnswer = "";
+        if (space1.getText().equals("")) {
+            return false;
+        }
+        if (!(space1.getText().equals("")))
+        {
+            currentAnswer = currentAnswer.concat((String) space1.getText());
+        }
+        if (!(space2.getText().equals("")))
+        {
+            currentAnswer = currentAnswer.concat((String) space2.getText());
+        }
+        if (!(space3.getText().equals("")))
+        {
+            currentAnswer = currentAnswer.concat((String) space3.getText());
+        }
+        if (!(space4.getText().equals("")))
+        {
+            currentAnswer = currentAnswer.concat((String) space4.getText());
+        }
+        if (!(space5.getText().equals("")))
+        {
+            currentAnswer = currentAnswer.concat((String) space5.getText());
+        }
+        if (!(space6.getText().equals("")))
+        {
+            currentAnswer = currentAnswer.concat((String) space6.getText());
+        }
+        if (!(space7.getText().equals("")))
+        {
+            currentAnswer = currentAnswer.concat((String) space7.getText());
+        }
+        if (!(space8.getText().equals("")))
+        {
+            currentAnswer = currentAnswer.concat((String) space8.getText());
+        }
+        if (!(space9.getText().equals("")))
+        {
+            currentAnswer = currentAnswer.concat((String) space9.getText());
+        }
+
+        boolean currentAnwserIsSolution = false;
+        int i = 0;
+        while (!currentAnwserIsSolution && (i < solutions.length))
+        {
+            if (solutions[i].equals(currentAnswer) && !answerFound[i]) {
+                currentScore += points[i];
+                scoretext.setText("Score: " + currentScore);
+                submitbutton.setText("correct");
+                answerFound[i] = true;
+                return true;
+            }
+            else if (solutions[i].equals(currentAnswer) && answerFound[i]) {
+                submitbutton.setText("found");
+                return true;
+            }
+            i++;
+        }
+        submitbutton.setText("false");
+        return false;
     }
 
     // Place the letter in the button pressed in the next available text box,
