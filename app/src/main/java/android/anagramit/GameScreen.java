@@ -1,9 +1,10 @@
 package android.anagramit;
 
-
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Display;
 import android.view.View;
@@ -26,6 +27,7 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
     Button letter8;
     Button letter9;
     TextView leveltext;
+    TextView timertext;
     TextView space1;
     TextView space2;
     TextView space3;
@@ -35,7 +37,6 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
     TextView space7;
     TextView space8;
     TextView space9;
-    TextView clock;
     int levelNumber;
     int buttonY;
     int textY;
@@ -44,8 +45,8 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
     int screenWidth;
     int spacing;
     int solutionNumber;
-    int time = 0;
     String guess = "";
+    int timelimit;
 
     // Array of the words for each level
     // i.e. anagram[0] = level 1, anagram[1] = level 2, etc
@@ -55,13 +56,14 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        // Array of the words for each level
-        // i.e. anagram[0] = level 1, anagram[1] = level 2, etc
-        // Length of each word must be between 3 and 9
-       // String[] anagram = {"123", "1234", "12345", "123456", "ANAGRAM", "DRJACOBS", "123456789", "DESIGN", "DEVELOP", "TESTING"};
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_screen);
+
+        //timelimit = 180000;
+        timelimit = 125000;
+        buttonY = 500;
+        textY = 750;
+        sideBorder = 5;
 
         // Get the width of the screen
         Display display = getWindowManager().getDefaultDisplay();
@@ -71,6 +73,7 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
 
         // Get the text boxes from the XML file
         leveltext = (TextView) findViewById(R.id.leveltext);
+        timertext = (TextView) findViewById(R.id.timertext);
         space1 = (TextView) findViewById(R.id.space1);
         space2 = (TextView) findViewById(R.id.space2);
         space3 = (TextView) findViewById(R.id.space3);
@@ -80,7 +83,6 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
         space7 = (TextView) findViewById(R.id.space7);
         space8 = (TextView) findViewById(R.id.space8);
         space9 = (TextView) findViewById(R.id.space9);
-        clock = (TextView) findViewById(R.id.textView9);
 
         // Get the End Game and Submit buttons from the XML
         endgamebutton = (Button) findViewById(R.id.endgamebutton);
@@ -130,7 +132,25 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
         // Set the textbox for the level number
         leveltext.setText(Integer.toString(levelNumber + 1));
 
+        new CountDownTimer(timelimit, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                if (((millisUntilFinished % 60000 ) / 1000) < 10) {
+                    timertext.setText("Time Remaining: " + millisUntilFinished / 60000 + ":0" + (millisUntilFinished % 60000) / 1000);
+                }
+                else {
+                    timertext.setText("Time Remaining: " + millisUntilFinished / 60000 + ":" + (millisUntilFinished % 60000) / 1000);
+                }
+
+            }
+
+            public void onFinish() {
+                timertext.setText("done!");
+            }
+        }.start();
+
     }
+
 
     // The actions that will be performed when a specific button is pressed
     @Override
@@ -142,66 +162,59 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
                 Intent intent = new Intent(this, ScoreScreen.class);
                 startActivity(intent);
                 break;
-            // currently the subbmit button changes its test to show if the word is correct or not
+
+            // currently the submit button changes its test to show if the word is correct or not
             // this is just a aplce holder and should be changed.
             case R.id.submitbutton:
                 if(guess.equals(anagram[solutionNumber])) {
                     submitbutton.setText("correct");
                 } else submitbutton.setText("false");
+                break;
 
             // If a letter button is pressed, put that character in the next available text box,
             // and disable the button that was pressed
             case R.id.letter1:
                 setAvailableSpace(letter1.getText());
-                guess = guess + letter1.getText();
                 letter1.setEnabled(false);
                 break;
 
             case R.id.letter2:
                 setAvailableSpace(letter2.getText());
-                guess = guess + letter2.getText();
                 letter2.setEnabled(false);
                 break;
 
             case R.id.letter3:
                 setAvailableSpace(letter3.getText());
-                guess = guess + letter3.getText();
                 letter3.setEnabled(false);
                 break;
 
             case R.id.letter4:
                 setAvailableSpace(letter4.getText());
-                guess = guess + letter4.getText();
                 letter4.setEnabled(false);
                 break;
 
             case R.id.letter5:
                 setAvailableSpace(letter5.getText());
-                guess = guess + letter5.getText();
                 letter5.setEnabled(false);
                 break;
 
             case R.id.letter6:
                 setAvailableSpace(letter6.getText());
-                guess = guess + letter6.getText();
                 letter6.setEnabled(false);
                 break;
 
             case R.id.letter7:
                 setAvailableSpace(letter7.getText());
-                guess = guess + letter7.getText();
                 letter7.setEnabled(false);
                 break;
 
             case R.id.letter8:
                 setAvailableSpace(letter8.getText());
-                guess = guess + letter8.getText();
                 letter8.setEnabled(false);
                 break;
 
             case R.id.letter9:
                 setAvailableSpace(letter9.getText());
-                guess = guess + letter9.getText();
                 letter9.setEnabled(false);
                 break;
 
@@ -260,37 +273,30 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
         {
             case 3:
                 setup3Buttons(anagram[levelNumber]);
-                solutionNumber = levelNumber;
                 break;
 
             case 4:
                 setup4Buttons(anagram[levelNumber]);
-                solutionNumber = levelNumber;
                 break;
 
             case 5:
                 setup5Buttons(anagram[levelNumber]);
-                solutionNumber = levelNumber;
                 break;
 
             case 6:
                 setup6Buttons(anagram[levelNumber]);
-                solutionNumber = levelNumber;
                 break;
 
             case 7:
                 setup7Buttons(anagram[levelNumber]);
-                solutionNumber = levelNumber;
                 break;
 
             case 8:
                 setup8Buttons(anagram[levelNumber]);
-                solutionNumber = levelNumber;
                 break;
 
             case 9:
                 setup9Buttons(anagram[levelNumber]);
-                solutionNumber = levelNumber;
                 break;
 
             default:
@@ -346,9 +352,6 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
         space3params.width = 100;
         space3params.height = 100;
         space3.requestLayout();
-
-        // setting the value of the clock. Just a test for now.
-        clock.setText(Integer.toString(time));
 
         space1.setX(spacing - 100);
         space1.setY(textY);
@@ -1161,5 +1164,4 @@ public class GameScreen extends ActionBarActivity implements View.OnClickListene
         space9.setText("");
 
     }
-
 }
