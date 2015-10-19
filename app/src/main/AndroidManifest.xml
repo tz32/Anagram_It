@@ -37,6 +37,10 @@
             android:name=".ScoreScreen"
             android:label="@string/title_activity_score_screen" >
         </activity>
+        <activity
+            android:name=".Anagram"
+            android:label="@string/title_activity_anagram" >
+        </activity>
     </application>
 
 </manifest>
