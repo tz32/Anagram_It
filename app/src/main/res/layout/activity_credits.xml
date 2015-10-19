@@ -5,7 +5,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="android.anagramit.Credits">
+    tools:context="android.anagramit.Credits"
+    android:background="#424242">
 
     <TextView
         android:layout_width="wrap_content"
@@ -23,18 +24,18 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Created by:"
         android:id="@+id/textView3"
+        android:layout_marginTop="84dp"
         android:layout_below="@+id/textView2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="84dp" />
+        android:layout_alignStart="@+id/backbutton" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:id="@+id/textView4"
+        android:text="\nAndrew Hodel\n\nDoug Peterson\n\nJonathon Todd\n\nTomas Zukowski"
         android:layout_below="@+id/textView3"
-        android:layout_centerHorizontal="true"
-        android:text="Andrew Hodel\nDoug Peterson\nJonathon Todd\nTomas Zukowski" />
+        android:layout_alignStart="@+id/textView3" />
 
     <Button
         android:layout_width="wrap_content"
