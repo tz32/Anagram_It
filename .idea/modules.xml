@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AnagramIt.iml" filepath="$PROJECT_DIR$/AnagramIt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Anagram_It.iml" filepath="$PROJECT_DIR$/Anagram_It.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
