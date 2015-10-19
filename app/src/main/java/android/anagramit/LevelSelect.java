@@ -66,8 +66,8 @@ public class LevelSelect extends ActionBarActivity implements View.OnClickListen
                 break;
 
             case R.id.level3:
-                Intent intent3 = new Intent(this, GameScreen.class);
-                intent3.putExtra("level_num", 3);
+                Intent intent3 = new Intent(this, Anagram.class);
+                //intent3.putExtra("level_num", 3);
                 startActivity(intent3);
                 break;
 
