@@ -17,20 +17,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Settings"
-        android:id="@+id/settingsbutton"
-        android:layout_below="@+id/startbutton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="44dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="Credits"
         android:id="@+id/creditsbutton"
-        android:layout_below="@+id/settingsbutton"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp" />
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/startbutton" />
 
     <TextView
         android:layout_width="wrap_content"

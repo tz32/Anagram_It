@@ -23,8 +23,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         startbutton = (Button) findViewById(R.id.startbutton);
         startbutton.setOnClickListener(this);
 
-        settingsbutton = (Button) findViewById(R.id.settingsbutton);
-        settingsbutton.setOnClickListener(this);
+       // settingsbutton = (Button) findViewById(R.id.settingsbutton);
+       // settingsbutton.setOnClickListener(this);
 
         creditsbutton = (Button) findViewById(R.id.creditsbutton);
         creditsbutton.setOnClickListener(this);
@@ -48,10 +48,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 startActivity(intent1);
                 break;
 
-            case R.id.settingsbutton:
-                Intent intent2 = new Intent(this, Settings.class);
-                startActivity(intent2);
-                break;
+            //case R.id.settingsbutton:
+               // Intent intent2 = new Intent(this, Settings.class);
+               // startActivity(intent2);
+              //  break;
 
             case R.id.creditsbutton:
                 Intent intent3 = new Intent(this, Credits.class);
